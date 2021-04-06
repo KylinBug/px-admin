@@ -156,7 +156,8 @@ const GlobalModel = {
     },
   },
   subscriptions: {
-    // 白名单
+    // 白名单（无需登录）
+    // 全局app参数
     setupParams({ dispatch }) {
       dispatch({ type: 'fetchParams' });
     },

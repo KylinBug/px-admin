@@ -18,18 +18,18 @@ const LoginMessage = ({ content }) => (
   />
 );
 
-const Login = props => {
+const Login = (props) => {
   const { sign = {}, submitting } = props;
   const { status, type: loginType } = sign;
   const [autoLogin, setAutoLogin] = useState(true);
   const [type, setType] = useState('password');
 
-  const handleSubmit = values => {
+  const handleSubmit = (values) => {
     const { dispatch } = props;
     dispatch({
       type: 'sign/signIn',
-      payload: { ...values, 'grant_type': type },
-    })
+      payload: { ...values, grant_type: type },
+    });
   };
 
   return (
@@ -96,7 +96,7 @@ const Login = props => {
         </Tab>
 
         <div>
-          <Checkbox checked={autoLogin} onChange={e => setAutoLogin(e.target.checked)}>
+          <Checkbox checked={autoLogin} onChange={(e) => setAutoLogin(e.target.checked)}>
             自动登录
           </Checkbox>
           <a
@@ -119,7 +119,6 @@ const Login = props => {
             注册账户
           </Link>
         </div> */}
-
       </LoginFrom>
     </div>
   );

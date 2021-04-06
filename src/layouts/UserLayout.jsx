@@ -1,4 +1,5 @@
-import { DefaultFooter, getMenuData, getPageTitle } from '@ant-design/pro-layout';
+import { getMenuData, getPageTitle } from '@ant-design/pro-layout';
+import CommonFooter from '@/components/GlobalFooter/CommonFooter';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Link, useIntl, connect } from 'umi';
 import React from 'react';
@@ -9,7 +10,7 @@ import styles from './UserLayout.less';
 
 const { CompanyName, RDCenter, siteName } = siteConfig;
 
-const UserLayout = props => {
+const UserLayout = (props) => {
   const {
     route = {
       routes: [],
@@ -49,11 +50,14 @@ const UserLayout = props => {
                 <span className={styles.title}>{siteName}</span>
               </Link>
             </div>
-            <div className={styles.desc}>{siteName} 是{CompanyName}{RDCenter}最具影响力的 Web 设计规范</div>
+            <div className={styles.desc}>
+              {siteName} 是{CompanyName}
+              {RDCenter}最具影响力的 Web 设计规范
+            </div>
           </div>
           {children}
         </div>
-        <DefaultFooter />
+        <CommonFooter />
       </div>
     </HelmetProvider>
   );

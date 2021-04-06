@@ -43,14 +43,14 @@ export default class PromiseRender extends React.Component {
   // Authorized  render is already instantiated, children is no instantiated
   // Secured is not instantiated
 
-  checkIsInstantiation = target => {
+  checkIsInstantiation = (target) => {
     if (isComponentClass(target)) {
       const Target = target;
-      return props => <Target {...props} />;
+      return (props) => <Target {...props} />;
     }
 
     if (React.isValidElement(target)) {
-      return props => React.cloneElement(target, props);
+      return (props) => React.cloneElement(target, props);
     }
 
     return () => target;
@@ -62,17 +62,17 @@ export default class PromiseRender extends React.Component {
     return Component ? (
       <Component {...rest} />
     ) : (
-        <div
-          style={{
-            width: '100%',
-            height: '100%',
-            margin: 'auto',
-            paddingTop: 50,
-            textAlign: 'center',
-          }}
-        >
-          <Spin size="large" />
-        </div>
-      );
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          margin: 'auto',
+          paddingTop: 50,
+          textAlign: 'center',
+        }}
+      >
+        <Spin size="large" />
+      </div>
+    );
   }
 }

@@ -1,4 +1,3 @@
-
 // umi routes: https://umijs.org/docs/routing
 
 // pro 扩展属性
@@ -170,7 +169,7 @@ export default [
                 routes: [
                   {
                     path: '/platform/approval',
-                    redirect: '/platform/approval/user-permission'
+                    redirect: '/platform/approval/user-permission',
                   },
                   {
                     path: '/platform/approval/user-permission',
@@ -298,4 +297,4 @@ export default [
       },
     ],
   },
-]
+];

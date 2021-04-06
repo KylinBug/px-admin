@@ -23,7 +23,7 @@ const getFormItemOptions = ({ onChange, defaultValue, customProps = {}, rules })
   return options;
 };
 
-const LoginItem = props => {
+const LoginItem = (props) => {
   const [count, setCount] = useState(props.countDown || 0);
   const [timing, setTiming] = useState(false); // 这么写是为了防止restProps中 带入 onChange, defaultValue, rules props tabUtil
 
@@ -40,7 +40,7 @@ const LoginItem = props => {
     tabUtil,
     ...restProps
   } = props;
-  const onGetCaptcha = useCallback(async mobile => {
+  const onGetCaptcha = useCallback(async (mobile) => {
     message.success('获取验证码成功！验证码为：1234');
     setTiming(true);
   }, []);
@@ -50,7 +50,7 @@ const LoginItem = props => {
 
     if (timing) {
       interval = window.setInterval(() => {
-        setCount(preSecond => {
+        setCount((preSecond) => {
           if (preSecond <= 1) {
             setTiming(false);
             clearInterval(interval); // 重置秒数
@@ -78,7 +78,7 @@ const LoginItem = props => {
     return (
       <FormItem shouldUpdate>
         {({ getFieldValue }) => (
-          <Row gutter={8}>
+          <Row gutter={8} style={{ height: '40px' }}>
             <Col span={16}>
               <FormItem name={name} {...options}>
                 <Input {...customProps} {...inputProps} />
@@ -111,12 +111,12 @@ const LoginItem = props => {
 };
 
 const LoginItems = {};
-Object.keys(ItemMap).forEach(key => {
+Object.keys(ItemMap).forEach((key) => {
   const item = ItemMap[key];
 
-  LoginItems[key] = props => (
+  LoginItems[key] = (props) => (
     <LoginContext.Consumer>
-      {context => (
+      {(context) => (
         <LoginItem
           customProps={item.props}
           rules={item.rules}

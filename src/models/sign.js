@@ -1,17 +1,18 @@
 /* eslint-disable no-shadow */
 import { message } from 'antd';
 // import { stringify } from 'qs';
-import { history } from 'umi';
-import { authToken, authLogout, authLogined } from '@/services/sign';
+import { history, Redirect } from 'umi';
+import { authToken, authLogout } from '@/services/sign';
 // import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
+import pathRegexp from 'path-to-regexp';
 import request from '@/utils/request';
 import { getToken, setToken, removeToken } from '@/utils/token';
 
-const setAuthOfRequest = () => {
+const setAuthOfRequest = (token) => {
   request.extendOptions({
     headers: {
-      Authorization: getToken(),
+      Authorization: token || getToken(),
     },
   });
 };
@@ -68,9 +69,8 @@ const SignModel = {
 
     *signOut(_, { call }) {
       yield call(authLogout);
-
-      history.replace({ pathname: '/user/login' });
       removeToken();
+      history.replace({ pathname: '/user/login' });
 
       // const { redirect } = getPageQuery(); // Note: There may be security issues, please note
 
@@ -93,18 +93,21 @@ const SignModel = {
     saveToken(state, { payload }) {
       return { ...state, accessToken: payload };
     },
-
     // changeLoginStatus(state, { payload }) {
     //   setAuthority(payload.currentAuthority);
     //   return { ...state, status: payload.status, type: payload.type };
     // },
   },
   subscriptions: {
-    setupToken({ dispatch }) {
+    // 通过接口判断是否需要登录，即 errorHandler 处理无权限跳转登录页，
+    // 很多api是不需要登录即可访问的，所以不是必须在hedser中携带token的，
+    // 如果强制携带token，反而是不正确的业务逻辑
+    setupToken({ dispatch, history }) {
       setAuthOfRequest();
+      if (pathRegexp('/user/login').exec(history.location.pathname)) return;
       dispatch({ type: 'user/fetchLoginUser' });
     },
-    // setupTimeout() {
+    // setupTimeout({ history }) {
     //   history.listen(({ pathname, query }) => {
     //     console.log('location==', query);
     //     dispatch({ type: 'signedCheck' })
