@@ -29,20 +29,26 @@ const noMatch = (
 /**
  * use Authorized check all menu item
  */
-const menuDataRender = (menuList) =>
-  menuList.map((item) => {
-    const localItem = { ...item, children: item.children ? menuDataRender(item.children) : [] };
-    return Authorized.check(item.authority, localItem, null);
-  });
+// const menuDataRender = (menuList) =>
+//   menuList.map((item) => {
+//     const localItem = { ...item, children: item.children ? menuDataRender(item.children) : [] };
+//     return Authorized.check(item.authority, localItem, null);
+//   });
 
-// const menuDataFormat = menuList =>
-//   menuList.map(item => ({ ...item, path: item.href, name: item.resourceName, icon: '', children: item.children ? menuDataFormat(item.children) : [] }));
+const menuDataFormat = (menuList) =>
+  menuList.map((item) => ({
+    ...item,
+    path: item.href,
+    name: item.resourceName,
+    icon: '',
+    children: item.children ? menuDataFormat(item.children) : [],
+  }));
 
 const BasicLayout = (props) => {
   const {
     dispatch,
     children,
-    // userMenus,
+    userMenus,
     settings,
     location = {
       pathname: '/',
@@ -119,8 +125,8 @@ const BasicLayout = (props) => {
           );
         }}
         footerRender={() => <CommonFooter />}
-        menuDataRender={menuDataRender}
-        // menuDataRender={() => menuDataFormat(userMenus)}
+        // menuDataRender={menuDataRender}
+        menuDataRender={() => menuDataFormat(userMenus)}
         rightContentRender={() => <RightContent />}
         {...props}
         {...settings}
