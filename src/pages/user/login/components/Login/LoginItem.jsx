@@ -78,8 +78,8 @@ const LoginItem = (props) => {
     return (
       <FormItem shouldUpdate>
         {({ getFieldValue }) => (
-          <Row gutter={8} style={{ height: '40px' }}>
-            <Col span={16}>
+          <Row gutter={8}>
+            <Col span={16} style={{ height: '40px' }}>
               <FormItem name={name} {...options}>
                 <Input {...customProps} {...inputProps} />
               </FormItem>
